@@ -59,7 +59,6 @@ endif
 
 # Compile:
 all: $(CPP_SOURCES) $(PROFILE_DEPENDENCIES) $(EXECUTABLE)
-	rm -f $(OBJECTS_PROFILE) $(EXECUTABLE_PROFILE) *.gcda */*.gcda
 	true
 	true                                                oo o
 	true                                                oo ooo
@@ -71,7 +70,7 @@ all: $(CPP_SOURCES) $(PROFILE_DEPENDENCIES) $(EXECUTABLE)
 
 # Clean the build environment by deleting any object files:
 clean: 
-	rm -f *.o */*.o *.op */*.op *.gdca */*.gcda *.profraw *.profdata $(EXECUTABLE)
+	sh -c 'rm -f apgluxe *.o */*.o *.op */*.op *.gdca */*.gcda *.profraw *.profdata || true'
 	echo Clean done
 
 $(EXECUTABLE): $(OBJECTS)
