@@ -328,7 +328,8 @@ public:
 
     }
 
-    std::string submitResults(const std::string& payoshakey, const std::string& root, uint64_t numsoups, int local_log, bool testing) {
+    std::string submitResults(const std::string& payoshakey, const std::string& root, uint64_t numsoups,
+                                int local_log, bool testing, std::string symmetry = SYMMETRY) {
 
         std::string authstring = "testing";
 
@@ -355,7 +356,7 @@ public:
         ss << "@MD5 " << md5(root) << "\n";
         ss << "@ROOT " << root << "\n";
         ss << "@RULE " << RULESTRING << "\n";
-        ss << "@SYMMETRY " << SYMMETRY << "\n";
+        ss << "@SYMMETRY " << symmetry << "\n";
         ss << "@NUM_SOUPS " << numsoups << "\n";
         ss << "@NUM_OBJECTS " << numObjects << "\n";
 
