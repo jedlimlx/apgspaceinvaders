@@ -81,7 +81,7 @@ def main():
             g.write('#define UPATTERN apg::pattern\n')
         elif (rulestring == 'b3s23'):
             g.write('#define STANDARD_LIFE 1\n')
-            g.write('#ifdef __AVX512F__\n')
+            g.write('#ifdef LONG_TILES\n')
             g.write('#define UPATTERN apg::upattern<apg::VTile44, 28, 44>\n')
             g.write('#define INCUBATOR apg::incubator<56, 88>\n')
             g.write('#else\n')

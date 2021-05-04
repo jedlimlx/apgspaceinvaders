@@ -1,3 +1,8 @@
+
+#ifdef __AVX512F__
+#define LONG_TILES 1
+#endif
+
 #include "includes/base.h"
 
 #ifdef USING_GPU
