@@ -32,6 +32,15 @@ int run_apgluxe(int argc, char *argv[]) {
 
     // Default values:
     #ifdef USING_GPU
+    int gpuCount = apg::getDeviceCount();
+
+    if (gpuCount <= 0) {
+        std::cerr << "Abort: apgsearch has not detected any GPUs" << std::endl;
+        return 1;
+    } else {
+        std::cerr << "Info: apgsearch has successfully detected " << gpuCount << " GPUs" << std::endl;
+    }
+
     int64_t soupsPerHaul = 200000000;
     #else
     int64_t soupsPerHaul = 10000000;
