@@ -102,7 +102,39 @@ copy in-place by running:
 
 in the repository directory.
 
-Windows users (precompiled)
+Apple M1 (Silicon) users
+------------------------
+
+Apple M1 chips use a different instruction set, namely ARMv8, so
+emulation is required to use apgsearch. In particular, you need to
+ensure that Rosetta 2 is installed and use the `arch` command as
+follows:
+
+    arch -x86_64 ./recompile.sh
+
+Even though this uses emulation (traditionally slow), the Apple M1 chip
+is surprisingly fast at emulating an x86_64 processor and runs apgsearch
+at a comparable speed to a pre-Haswell processor.
+
+Windows 10 users
+----------------
+
+Even though the Cygwin64 solution above will work perfectly on Windows 10,
+[one user](https://gitlab.com/hedgepiggy) noted that it does not fully
+utilise the processor. Instead, you are encouraged to use WSL bash as
+described [here](https://gitlab.com/apgoucher/apgmera/issues/2).
+
+It seems that the order of magnitude difference quoted above is on the
+extreme side; other users report [a 20 percent difference][1] between
+WSL, VirtualBox, and Cygwin64 (in descending order of speed).
+
+[1]: http://conwaylife.com/forums/viewtopic.php?f=7&t=3049&p=61174#p61174
+
+Moreover, these comparisons were performed with the old threading model
+(OpenMP threads), whereas apgluxe has subsequently migrated to pure C++11
+threads for increased cross-platform support.
+
+Windows users (pre-Windows 10, precompiled)
 ---------------------------
 
 There is a precompiled Windows binary, only for `b3s23/C1`, available from
@@ -136,24 +168,6 @@ old version of GCC. Run the Cygwin setup program to ensure that gcc-g++ is
 updated.
 
 Note that the `-p` option for parallelisation does not work in Cygwin.
-
-Windows 10 users
-----------------
-
-Even though the Cygwin64 solution above will work perfectly on Windows 10,
-[one user](https://gitlab.com/hedgepiggy) noted that it does not fully
-utilise the processor. Instead, you are encouraged to use WSL bash as
-described [here](https://gitlab.com/apgoucher/apgmera/issues/2).
-
-It seems that the order of magnitude difference quoted above is on the
-extreme side; other users report [a 20 percent difference][1] between
-WSL, VirtualBox, and Cygwin64 (in descending order of speed).
-
-[1]: http://conwaylife.com/forums/viewtopic.php?f=7&t=3049&p=61174#p61174
-
-Moreover, these comparisons were performed with the old threading model
-(OpenMP threads), whereas apgluxe has subsequently migrated to pure C++11
-threads for increased cross-platform support.
 
 Speed boosts
 ============
