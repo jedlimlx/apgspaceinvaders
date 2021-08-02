@@ -161,7 +161,7 @@ int run_apgluxe(int argc, char *argv[]) {
     #endif
 
     // Disable verification by default if running on a HPC;
-    // otherwise verify three hauls per uploaded haul:
+    // otherwise verify five hauls per uploaded haul:
     if (verifications < 0) {
         verifications = (numThreads <= 4) ? 5 : 0;
     }

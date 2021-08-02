@@ -53,6 +53,7 @@ The options may include, for example:
 - `-L 1`               Save a local log of each haul
 - `-t 1`               Disable uploading to Catagolue
 - `-i 10`              Upload exactly 10 hauls before exiting
+- `-v 5`               Peer-verify 5 hauls for every haul uploaded
 
 Example usage
 -------------
