@@ -90,7 +90,7 @@ std::vector<uint64_t> narrow(const std::vector<uint64_t>& orig, uint64_t lb, uin
 }
 
 #ifdef STDIN_SYM
-std::string retrieveSeed(std::atomic<bool> *running) {
+std::string retrieveSeed(std::atomic<bool> *running, apg::lifetree<uint32_t, BITPLANES> &lt) {
     std::string seed;
     bool readingrle = false;
     std::string stdin_line;
@@ -104,6 +104,19 @@ std::string retrieveSeed(std::atomic<bool> *running) {
         }
         if ((stdin_line[0] == 'x') && !readingrle) {
             readingrle = true;
+
+            if ((stdin_line[1] == 'p') || (stdin_line[1] == 'q') || (stdin_line[1] == 's')) {
+                apg::pattern pat(&lt, stdin_line, RULESTRING);
+                std::ostringstream ss;
+                pat.write_rle(ss);
+                std::string rle_string = ss.str();
+                rle_string = rle_string.substr(rle_string.find("x"));
+                rle_string = rle_string.substr(rle_string.find("\n"));
+                rle_string = rle_string.substr(0, rle_string.find("!") + 1);
+                std::replace(rle_string.begin(), rle_string.end(), '\n', '-');
+                seed = rle_string;
+                break;
+            }
         }
         if (stdin_line.find('!') != std::string::npos) {
             break;
@@ -169,7 +182,7 @@ void perpetualSearch(uint64_t soupsPerHaul, int numThreads, bool interactive, co
 
         if (numThreads == 0) {
 #ifdef STDIN_SYM
-           std::string suffix = retrieveSeed(&running);
+           std::string suffix = retrieveSeed(&running, lt);
 #else
            std::string suffix = strConcat(soupsCompletedSinceStart);
 #endif
