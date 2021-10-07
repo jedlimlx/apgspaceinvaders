@@ -374,13 +374,9 @@ public:
 
             ss << kv.second;
 
-            #ifdef STDIN_SYM
-            ss << " " << occurrences[0];
-            #else
             for (const std::string& s : occurrences) {
                 ss << " " << s;
             }
-            #endif
 
             ss << "\n";
         }
