@@ -186,8 +186,10 @@ void perpetualSearch(uint64_t soupsPerHaul, int numThreads, bool interactive, co
 #else
            std::string suffix = strConcat(soupsCompletedSinceStart);
 #endif
-            globalSoup.censusSoup(seed, suffix, cfier);
-            soupsCompletedSinceStart += 1;
+            if (suffix != "") {
+                globalSoup.censusSoup(seed, suffix, cfier);
+                soupsCompletedSinceStart += 1;
+            }
         } else {
             std::vector<SoupSearcher> localSoups(numThreads, SoupSearcher(&globalSoup));
             std::vector<std::thread> lsthreads(numThreads);
