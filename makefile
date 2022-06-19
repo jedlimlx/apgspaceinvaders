@@ -15,8 +15,7 @@ C_COMPILER=x86_64-w64-mingw32-gcc-posix
 endif
 EXTRA_LIBS=-static -lwinpthread -lwsock32 -lws2_32 -static-libstdc++
 else
-COMPILER_FLAGS += -flto -march=native
-LD_FLAGS += -flto
+COMPILER_FLAGS += -march=native
 CPP_COMPILER=g++
 C_COMPILER=gcc
 endif
@@ -32,6 +31,9 @@ ifdef USE_GPU
 LD_FLAGS=
 CU_SOURCES=includes/gpusrc.cu
 LINKER=$(CU_COMPILER)
+else
+COMPILER_FLAGS += -flto
+LD_FLAGS += -flto
 endif
 
 OBJECTS=$(CPP_SOURCES:.cpp=.o) $(C_SOURCES:.c=.o) $(CU_SOURCES:.cu=.o)
