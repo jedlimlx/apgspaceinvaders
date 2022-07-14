@@ -12,7 +12,7 @@
 #define PREFIX_VERSION ""
 #endif
 
-#define APG_VERSION PREFIX_VERSION "v5.32-" LIFELIB_VERSION
+#define APG_VERSION PREFIX_VERSION "v5.33-" LIFELIB_VERSION
 
 #include "utilities.h"
 #include "params2.h"

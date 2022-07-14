@@ -117,41 +117,44 @@ public:
         pat.advance(0, 1, duration);
 
         #ifdef INCUBATOR
-        INCUBATOR icb;
-        apg::copycells(&pat, &icb);
+        if (attempt < 3) {
+            INCUBATOR icb;
+            apg::copycells(&pat, &icb);
 
-        #ifdef GLIDERS_EXIST
-        bool remove_gliders = true;
-        #else
-        bool remove_gliders = false;
-        #endif
+            #ifdef GLIDERS_EXIST
+            bool remove_gliders = true;
+            #else
+            bool remove_gliders = false;
+            #endif
 
-        #ifdef STANDARD_LIFE
-        bool remove_annoyances = true;
-        #else
-        bool remove_annoyances = false;
-        #endif
+            #ifdef STANDARD_LIFE
+            bool remove_annoyances = true;
+            #else
+            bool remove_annoyances = false;
+            #endif
 
-        cfier.deeppurge(tally, icb, &classifyAperiodic, remove_annoyances, remove_gliders);
+            cfier.deeppurge(tally, icb, &classifyAperiodic, remove_annoyances, remove_gliders);
 
-        apg::bitworld bwv0;
-        icb.to_bitworld(bwv0, 0);
+            apg::bitworld bwv0;
+            icb.to_bitworld(bwv0, 0);
 
-        int64_t n_gliders = bwv0.population() / 5;
+            int64_t n_gliders = bwv0.population() / 5;
 
-        #ifndef HASHLIFE_ONLY
-        n_gliders += pat.glider_count;
-        #endif
+            #ifndef HASHLIFE_ONLY
+            n_gliders += pat.glider_count;
+            #endif
 
-        if (n_gliders > 0) {
-            tally["xq4_153"] += n_gliders;
+            if (n_gliders > 0) {
+                tally["xq4_153"] += n_gliders;
+            }
         }
-
-        #else
-        std::vector<apg::bitworld> bwv(BITPLANES + 1);
-        pat.extractPattern(bwv);
-        cfier.census(tally, bwv, &classifyAperiodic, true);
+        else
         #endif
+        {
+            std::vector<apg::bitworld> bwv(BITPLANES + 1);
+            pat.extractPattern(bwv);
+            cfier.census(tally, bwv, &classifyAperiodic, true);
+        }
 
         #endif
 
