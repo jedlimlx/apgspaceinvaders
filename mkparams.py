@@ -26,6 +26,9 @@ def main():
         elif symmetry[0] == 'D':
             symmetry = 'H' + symmetry[1:]
 
+    if (rulestring != 'b3s23') and symmetry.startswith('G2'):
+        raise ValueError("Error: G2 symmetries are only supported in rule b3s23")
+
     # Convert rulestrings such as 'B3/S23' into 'b3s23':
     newrule = sanirule(rulestring)
     if newrule != rulestring:
@@ -77,14 +80,20 @@ def main():
             g.write('#define USING_GPU 1\n')
             if (rulestring == 'b3s23'):
                 g.write('#define NEW_GPU_ALGO 1\n')
-            if (symmetry in ['H2_+1', 'H4_+1', 'H4_+2']):
+            if (symmetry in ['H2_+1', 'H4_+1', 'H4_+2', 'G2_1']):
                 g.write('#define VREFLECT_ODD 1\n')
-            if (symmetry in ['H2_+2', 'H4_+4']):
+            if (symmetry in ['H2_+2', 'H4_+4', 'G2_4', 'G2_2']):
                 g.write('#define VREFLECT_EVEN 1\n')
-            if (symmetry in ['H4_+2', 'H4_+4']):
+            if (symmetry in ['H4_+2', 'H4_+4', 'G2_4']):
                 g.write('#define HREFLECT_EVEN 1\n')
-            if (symmetry in ['H4_+1']):
+            if (symmetry in ['H4_+1', 'G2_1', 'G2_2']):
                 g.write('#define HREFLECT_ODD 1\n')
+            if (symmetry in ['G2_1']):
+                g.write('#define RESTRICT_C2_1 1\n')
+            if (symmetry in ['G2_2']):
+                g.write('#define RESTRICT_C2_2 1\n')
+            if (symmetry in ['G2_4']):
+                g.write('#define RESTRICT_C2_4 1\n')
 
         if (family >= 6):
             g.write('#define HASHLIFE_ONLY 1\n')
