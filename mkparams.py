@@ -75,6 +75,16 @@ def main():
 
         if using_gpu:
             g.write('#define USING_GPU 1\n')
+            if (rulestring == 'b3s23'):
+                g.write('#define NEW_GPU_ALGO 1\n')
+            if (symmetry in ['H2_+1', 'H4_+1', 'H4_+2']):
+                g.write('#define VREFLECT_ODD 1\n')
+            if (symmetry in ['H2_+2', 'H4_+4']):
+                g.write('#define VREFLECT_EVEN 1\n')
+            if (symmetry in ['H4_+2', 'H4_+4']):
+                g.write('#define HREFLECT_EVEN 1\n')
+            if (symmetry in ['H4_+1']):
+                g.write('#define HREFLECT_ODD 1\n')
 
         if (family >= 6):
             g.write('#define HASHLIFE_ONLY 1\n')
