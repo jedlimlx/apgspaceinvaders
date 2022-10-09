@@ -78,7 +78,7 @@ def main():
 
         if using_gpu:
             g.write('#define USING_GPU 1\n')
-            if (rulestring == 'b3s23'):
+            if (rulestring == 'b3s23') or (rulestring == 'b38s23'):
                 g.write('#define NEW_GPU_ALGO 1\n')
             if (symmetry in ['H2_+1', 'H4_+1', 'H4_+2', 'G2_1']):
                 g.write('#define VREFLECT_ODD 1\n')
@@ -111,6 +111,9 @@ def main():
             g.write("#define UPATTERN %s\n" % upattern)
             if 'VTile28' in upattern:
                 g.write('#define INCUBATOR apg::incubator<56, 56>\n')
+
+        if (rulestring == 'b38s23'):
+            g.write('#define PEDESTRIAN_LIFE 1\n')
 
         if (re.match('b36?7?8?s0?235?6?7?8?$', rulestring)):
             g.write('#define GLIDERS_EXIST 1\n')
