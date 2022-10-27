@@ -13,7 +13,7 @@ else
 printf "\033[33;1mDownloading lifelib...\033[0m\n"
 fi
 
-git submodule update --init
+git submodule update --init --recursive
 else
 printf "Not a git repository; skipping updates...\n"
 fi
