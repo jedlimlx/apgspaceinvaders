@@ -260,6 +260,7 @@ void perpetualSearch(uint64_t soupsPerHaul, int numThreads, bool interactive, co
         if (finished) {
             std::cout << "----------------------------------------------------------------------" << std::endl;
             std::cout << soupsCompletedSinceStart << " soups completed." << std::endl;
+            std::cout << globalSoup.tilesProcessed << " tiles processed." << std::endl;
             std::cout << "Attempting to contact Catagolue..." << std::endl;
             std::string payoshaResponse = globalSoup.submitResults(payoshaKey, seed, soupsCompletedSinceStart, local_log, testing);
 

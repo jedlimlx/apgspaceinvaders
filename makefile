@@ -2,7 +2,7 @@
 CU_COMPILER=nvcc
 
 CU_FLAGS=-c --std=c++11
-COMPILER_FLAGS=-c -Wall -Wextra -pedantic -O3 -pthread
+COMPILER_FLAGS=-c -Wall -Wextra -pedantic -O3 -pthread -g
 LD_FLAGS=-pthread
 
 ifdef USE_MINGW
