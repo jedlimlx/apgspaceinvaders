@@ -26,9 +26,6 @@ def main():
         elif symmetry[0] == 'D':
             symmetry = 'H' + symmetry[1:]
 
-    if (rulestring != 'b3s23') and symmetry.startswith('G2'):
-        raise ValueError("Error: G2 symmetries are only supported in rule b3s23")
-
     # Convert rulestrings such as 'B3/S23' into 'b3s23':
     newrule = sanirule(rulestring)
     if newrule != rulestring:
