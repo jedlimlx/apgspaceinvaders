@@ -44,12 +44,10 @@ void populateLuts() {
 }
 
 void partialBalancedSearch(std::vector<uint64_t> *vec, std::string seed, SoupSearcher *localSoup,
-                            std::atomic<bool> *running, std::atomic<uint64_t> *idx, std::atomic<uint64_t> *ts) {
+                            std::atomic<bool> *running, std::atomic<uint64_t> *idx, std::atomic<uint64_t> *ts,
+                            apg::base_classifier<BITPLANES> *cfier) {
 
     uint64_t maxidx = vec->size();
-
-    apg::lifetree<uint32_t, BITPLANES> lt(LIFETREE_MEM);
-    apg::base_classifier<BITPLANES> cfier(&lt, RULESTRING);
 
     while (*running) {
 
@@ -58,7 +56,7 @@ void partialBalancedSearch(std::vector<uint64_t> *vec, std::string seed, SoupSea
 
         uint64_t suffix = (*vec)[curridx];
 
-        localSoup->censusSoup(seed, strConcat(suffix), cfier);
+        localSoup->censusSoup(seed, strConcat(suffix), *cfier);
         (*ts)++;
 
     }
@@ -129,6 +127,17 @@ std::string retrieveSeed(std::atomic<bool> *running, apg::lifetree<uint32_t, BIT
 }
 #endif
 
+
+struct LTC {
+
+    apg::lifetree<uint32_t, BITPLANES> lt;
+    apg::base_classifier<BITPLANES> cfier;
+
+    LTC() : lt(LIFETREE_MEM), cfier(&lt, RULESTRING) { }
+
+};
+
+
 void perpetualSearch(uint64_t soupsPerHaul, int numThreads, bool interactive, const std::string& payoshaKey, const std::string& seed,
                         int unicount, int local_log, std::atomic<bool> &running, bool testing) {
     /*
@@ -152,8 +161,8 @@ void perpetualSearch(uint64_t soupsPerHaul, int numThreads, bool interactive, co
 
     SoupSearcher globalSoup;
     globalSoup.tilesProcessed = 0;
-    apg::lifetree<uint32_t, BITPLANES> lt(LIFETREE_MEM);
-    apg::base_classifier<BITPLANES> cfier(&lt, RULESTRING);
+
+    LTC ltc;
 
     populateLuts();
 
@@ -177,17 +186,18 @@ void perpetualSearch(uint64_t soupsPerHaul, int numThreads, bool interactive, co
     uint64_t maxcount = soupsPerHaul;
 
     uint64_t lb = 0;
+    std::vector<LTC> ltcs((numThreads > 0) ? numThreads : 0);
 
     while (running) {
 
         if (numThreads == 0) {
 #ifdef STDIN_SYM
-           std::string suffix = retrieveSeed(&running, lt);
+           std::string suffix = retrieveSeed(&running, ltc.lt);
 #else
            std::string suffix = strConcat(soupsCompletedSinceStart);
 #endif
             if (suffix != "") {
-                globalSoup.censusSoup(seed, suffix, cfier);
+                globalSoup.censusSoup(seed, suffix, ltc.cfier);
                 soupsCompletedSinceStart += 1;
             }
         } else {
@@ -202,7 +212,7 @@ void perpetualSearch(uint64_t soupsPerHaul, int numThreads, bool interactive, co
             vec.clear();
 
             for (int j = 0; j < numThreads; j++) {
-                lsthreads[j] = std::thread(partialBalancedSearch, &(nvec), seed, &(localSoups[j]), &running, &idx, &ts);
+                lsthreads[j] = std::thread(partialBalancedSearch, &(nvec), seed, &(localSoups[j]), &running, &idx, &ts, &(ltcs[j].cfier));
             }
 
             uint64_t newi = soupsCompletedSinceStart;
