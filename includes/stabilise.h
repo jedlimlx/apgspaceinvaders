@@ -12,6 +12,8 @@ int naivestab_awesome(UPATTERN &pat) {
     int period = 12;
     int security = 15;
 
+    int steps = 0;
+
     #ifdef STDIN_SYM
     pat.advance(0, 0, 256);
     #endif
@@ -27,6 +29,18 @@ int naivestab_awesome(UPATTERN &pat) {
         if (i == 600) { period = 30; }
 
         pat.advance(0, 0, period);
+        steps += period;
+
+        #ifdef MAXPOP
+        if (pat.totalPopulation() > MAXPOP) {
+            std::cout << "Failed to detect periodic behavior (soup might be explosive) (naivestab, population)!" << std::endl;
+            return 222222;
+        } else if (steps > MAXGEN) {
+            std::cout << "Failed to detect periodic behavior (soup might be explosive) (naivestab, long-lasting)!" << std::endl;
+            return 222222;
+        }
+        #endif
+
         #ifndef HASHLIFE_ONLY
         if (pat.modified.size() == 0) { return 2; }
         #endif
@@ -71,6 +85,16 @@ int stabilise3(UPATTERN &pat) {
 
         pat.advance(0, 0, 30);
         generation += 30;
+
+        #ifdef MAXPOP
+        if (pat.totalPopulation() > MAXPOP) {
+            std::cout << "Failed to detect periodic behavior (soup might be explosive) (stabilize3, population)!" << std::endl;
+            return 222222;
+        } else if (generation > MAXGEN) {
+            std::cout << "Failed to detect periodic behavior (soup might be explosive) (stabilize3, long-lasting)!" << std::endl;
+            return 222222;
+        }
+        #endif
 
         uint64_t h = pat.totalHash(120);
 

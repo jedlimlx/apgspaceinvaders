@@ -18,6 +18,7 @@ def main():
     symmetry = sys.argv[2]
 
     using_gpu = (len(sys.argv) > 3) and (sys.argv[3] == 'true')
+    spaceinvaders = len(sys.argv) == 6
 
     # Use GPU-specific symmetries
     if using_gpu:
@@ -25,6 +26,11 @@ def main():
             symmetry = 'G' + symmetry[1:]
         elif symmetry[0] == 'D':
             symmetry = 'H' + symmetry[1:]
+
+    # Computing the maximum population & generations from the inputs
+    if spaceinvaders:
+        max_pop = int(sys.argv[4])
+        max_gen = int(sys.argv[5])
 
     # Convert rulestrings such as 'B3/S23' into 'b3s23':
     newrule = sanirule(rulestring)
@@ -61,7 +67,7 @@ def main():
 
         g.write('#define PYTHON_VERSION "%s"\n' % repr(sys.version.replace('\n', ' ')))
         g.write('#define BITPLANES %d\n' % bitplanes)
-        g.write('#define SYMMETRY "%s"\n' % symmetry)
+        g.write('#define SYMMETRY "%s"\n' % (symmetry + ("_spaceinvaders" if (spaceinvaders and "stdin" not in symmetry) else "")))
         g.write('#define RULESTRING "%s"\n' % rulestring)
         g.write('#define CLASSIFIER apg::base_classifier<BITPLANES>\n')
 
@@ -116,6 +122,10 @@ def main():
             g.write('#define GLIDERS_EXIST 1\n')
         else:
             g.write('#define DISABLE_GLIDERS 1\n')
+
+        if spaceinvaders:
+            g.write('#define MAXPOP %s\n' % max_pop)
+            g.write('#define MAXGEN %s\n' % max_gen)
 
 
 main()

@@ -269,6 +269,7 @@ public:
         #endif
 
         int duration = stabilise3(pat);
+        if (duration == 222222) return;
 
         bool failure = true;
         int attempt = 0;
@@ -298,6 +299,12 @@ public:
                 pat.clearHistory();
                 pat.decache();
                 pat.advance(0, 0, step);
+                #ifdef MAXPOP
+                if (pat.totalPopulation() > MAXPOP) {
+                    std::cout << "Failed to detect periodic behavior (soup might be explosive) (censusSoup, population)!" << std::endl;
+                    return;
+                }
+                #endif
                 #endif
                 step *= 4;
                 duration = step * 2;
