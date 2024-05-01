@@ -54,6 +54,8 @@ The options may include, for example:
 - `-t 1`               Disable uploading to Catagolue
 - `-i 10`              Upload exactly 10 hauls before exiting
 - `-v 5`               Peer-verify 5 hauls for every haul uploaded
+- `--maxpop 10000`     Skip soups with a maximum population larger than 10000
+- `--maxgen 180000`    Skip soups that run for longer than 180000 generations
 
 Example usage
 -------------
@@ -254,6 +256,16 @@ Profile-guided optimisation can be enabled with:
 
 This is only supported for the compilers GCC and Clang, rather than nvcc,
 so is specific to CPU searching. The benefits are relatively mild.
+
+Space-invaders Symmetries
+-------------------------
+
+These can be enabled by using the --maxpop and/or the --maxgen arguments as such
+
+    ./recompile.sh --maxpop 10000 --maxgen 180000
+
+This is useful for searching rules that may explode on some soups.
+The hauls will be uploaded to separate symmetries such as C1_spaceinvaders to avoid mixing hauls with regular symmetries.
 
 Credits and licences
 ====================
