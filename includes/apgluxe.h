@@ -110,10 +110,10 @@ int run_apgluxe(int argc, char *argv[]) {
             if (!consumed_sym) {
                 std::cout << "\033[1;33mapgluxe " << APG_VERSION << "\033[0m: ";
                 std::string desired_symmetry = argv[i+1];
-                if (strcmp(SYMMETRY, argv[i+1]) == 0) {
-                    std::cout << "Symmetry \033[1;34m" << SYMMETRY << "\033[0m is correctly configured." << std::endl;
+                if (strcmp(SYMMETRY2, argv[i+1]) == 0) {
+                    std::cout << "Symmetry \033[1;34m" << SYMMETRY2 << "\033[0m is correctly configured." << std::endl;
                 } else {
-                    std::cout << "Symmetry \033[1;34m" << SYMMETRY << "\033[0m does not match desired symmetry \033[1;34m";
+                    std::cout << "Symmetry \033[1;34m" << SYMMETRY2 << "\033[0m does not match desired symmetry \033[1;34m";
                     std::cout << desired_symmetry << "\033[0m." << std::endl;
                     execvp("./immediate.sh", argv);
                     return 1;
@@ -168,7 +168,7 @@ int run_apgluxe(int argc, char *argv[]) {
     
     std::cout << "\nGreetings, this is \033[1;33mapgluxe " << APG_VERSION;
     std::cout << "\033[0m, configured for \033[1;34m" << RULESTRING << "/";
-    std::cout << SYMMETRY << "\033[0m.\n" << std::endl;
+    std::cout << SYMMETRY2 << "\033[0m.\n" << std::endl;
 
     std::cout << "\033[32;1mLifelib version:\033[0m " << LIFELIB_VERSION << std::endl;
     std::cout << "\033[32;1mCompiler version:\033[0m " << __VERSION__ << std::endl;

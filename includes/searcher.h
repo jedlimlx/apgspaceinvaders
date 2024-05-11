@@ -319,7 +319,6 @@ public:
     }
 
     void censusSoup(const std::string& seedroot, const std::string& suffix, apg::base_classifier<BITPLANES> &cfier) {
-
         std::vector<apg::bitworld> vbw = apg::hashsoup(seedroot + suffix, SYMMETRY);
         censusSoup(seedroot, suffix, cfier, vbw);
 
@@ -339,7 +338,7 @@ public:
     }
 
     std::string submitResults(const std::string& payoshakey, const std::string& root, uint64_t numsoups,
-                                int local_log, bool testing, std::string symmetry = SYMMETRY) {
+                                int local_log, bool testing, std::string symmetry = SYMMETRY2) {
 
         std::string authstring = "testing";
 

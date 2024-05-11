@@ -252,7 +252,7 @@ void perpetualSearch(uint64_t soupsPerHaul, int numThreads, bool interactive, co
         uint64_t soupsCompletedSinceLastMessage = soupsCompletedSinceStart - soupsCompletedBeforeLastMessage;
 
         if (finished || (secondsSinceLastMessage >= 10.0) || ((secondsSinceLastTimerCheck >= 1.0) && (soupsCompletedSinceLastMessage == 1)) || (soupsCompletedSinceLastMessage >= 1000000)) {
-            std::cout << RULESTRING << "/" << SYMMETRY << ": " << soupsCompletedSinceStart << " soups completed ("
+            std::cout << RULESTRING << "/" << SYMMETRY2 << ": " << soupsCompletedSinceStart << " soups completed ("
                       << std::fixed << std::setprecision(3) << (soupsCompletedSinceLastMessage / secondsSinceLastMessage) << " soups/second current, "
                       << (soupsCompletedSinceStart / secondsSinceStart) << " overall)." << std::endl;
 

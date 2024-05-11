@@ -91,7 +91,7 @@ if [ "${#mingwarg}" -ne 0 ]; then
 exit 0
 fi
 
-symmarg="$( grep 'SYMMETRY'   'includes/params.h' | grep -o '".*"' | tr '\n' '"' | sed 's/"//g' )"
+symmarg="$( grep 'SYMMETRY2'   'includes/params.h' | grep -o '".*"' | tr '\n' '"' | sed 's/"//g' )"
 rulearg="$( grep 'RULESTRING' 'includes/params.h' | grep -o '".*"' | tr '\n' '"' | sed 's/"//g' )"
 
 if [ "${#immarg}" -ne 0 ]; then

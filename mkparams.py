@@ -67,7 +67,8 @@ def main():
 
         g.write('#define PYTHON_VERSION "%s"\n' % repr(sys.version.replace('\n', ' ')))
         g.write('#define BITPLANES %d\n' % bitplanes)
-        g.write('#define SYMMETRY "%s"\n' % (symmetry + ("_spaceinvaders" if (spaceinvaders and "stdin" not in symmetry) else "")))
+        g.write('#define SYMMETRY "%s"\n' % symmetry)
+        g.write('#define SYMMETRY2 "%s"\n' % (symmetry + ("_spaceinvaders" if (spaceinvaders and "stdin" not in symmetry) else "")))
         g.write('#define RULESTRING "%s"\n' % rulestring)
         g.write('#define CLASSIFIER apg::base_classifier<BITPLANES>\n')
 
